@@ -27,7 +27,7 @@ export default {
         Pie4,
         Histogram,
         ZhuTu,
-        ShouXieBingTu
+        ShouXieBingTu,
     },
     setup(){
         const state = reactive({

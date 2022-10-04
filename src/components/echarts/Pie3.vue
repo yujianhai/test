@@ -6,7 +6,7 @@
 
 <script>
 import * as echarts from 'echarts'
-import { onMounted, ref, toRefs } from 'vue'
+import { onMounted, ref, toRefs, watch } from 'vue'
 export default {
     props:{
         data:{}
@@ -17,9 +17,13 @@ export default {
         let {data}  = toRefs(props)
 
         const initChart = ()=>{
-             chart = echarts.init(chartDom.value)
+            if(!echarts.getInstanceByDom(chartDom.value)){
+                chart = echarts.init(chartDom.value)
+            }else{
+                chart.clear()
+            }
              const chartData = data.value
-             const option = getOption(chartData)
+             const option = getOption(chartData) //模板  任何一个echarts将getoption换掉就行
              chart.setOption(option,true)
         }
 
@@ -202,9 +206,12 @@ export default {
 
         }
         onMounted(()=>{
-        initChart()
+            initChart()
         })
 
+        watch(props,()=>{
+            initChart()
+        })
         return {
             chartDom
         }
