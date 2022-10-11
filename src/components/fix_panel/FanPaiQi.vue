@@ -60,9 +60,10 @@ export default {
         },
     },
     mounted() {
-        setTimeout(() => {
-            this.flag = false;
-        }, 5000);
+        this.flag = false;
+        // setTimeout(() => {
+        //     this.flag = false;
+        // }, 5000);
     },
     methods: {
         // 设置文字滚动
@@ -70,7 +71,6 @@ export default {
             const numberItems = this.$refs.numberItem;
             if (numberItems) {
                 const numberArr = this.orderNum.filter(item => (item));
-                // console.log(numberArr);
                 // translate对数字字符进行滚动
                 for (let index = 0; index < numberItems.length; index += 1) {
                     const elem = numberItems[index];

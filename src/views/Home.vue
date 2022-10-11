@@ -15,8 +15,6 @@ import Center from '../components/center_component'
 import { ref } from 'vue'
 const componentName = ref('')
 const resolveChangeValue = (value) => {
-  console.log('value------>', value)
-
   componentName.value = value
 }
 </script>

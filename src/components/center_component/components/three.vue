@@ -62,18 +62,15 @@ export default {
             ]
             },
              pie3: {
-                data:{
-                    value:90,
-                    max:100
-                }
+                data:[41,5,5,10]
             },
             pie4:{
                 data:[{
                     name: '病假',
-                    value: 20
+                    value: 30
                 },{
                     name: '事假',
-                    value: 10
+                    value: 20
                 },{
                     name: '婚假',
                     value: 30

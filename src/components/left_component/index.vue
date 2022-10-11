@@ -34,13 +34,13 @@ import { reactive, toRefs, defineEmits } from 'vue'
         },
         {
             icon: 'd',
-            name: 'XXX',
+            name: '滚牌器',
             number: 'Four',
         },
         {
             icon: 'e',
-            name: 'XXX',
-            number: 'Two',
+            name: 'Five',
+            number: 'Five',
         },
         {
             icon: 'f',

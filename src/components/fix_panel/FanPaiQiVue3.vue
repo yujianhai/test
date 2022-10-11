@@ -1,7 +1,6 @@
 <!-- 翻牌器 -->
 <template>
     <div class="number-scoller" :style="`width:${config.width}px`">
-        {{config.num}}
         <div class="box" v-for="(item, index) in config.num.length" :key="index">
             <div class="box-number-bgc">
                 <div class="box-item">
@@ -18,7 +17,6 @@
     </div>
 </template>
 <script>
-// import {  } from '@vue/reactivity'
 import { onMounted,watch,reactive, ref, toRefs } from 'vue'
 export default {
     props:{
@@ -80,7 +78,7 @@ export default {
                     //     setNumberTransform();
                     // }, 300);
                 }
-            },300)
+            },100)
         },{
             immediate: true,
             deep: true,

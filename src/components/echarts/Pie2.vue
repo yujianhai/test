@@ -1,42 +1,20 @@
 <template>
     <div class="content">
-        <div ref="chartsDom" class="charts"></div>
+        <div ref="chartDom" class="charts"></div>
     </div>
 </template>
 
 <script>
 import * as echarts from 'echarts'
 import {ref,onMounted,onBeforeUnmount,toRefs, watch} from 'vue'
+import useEchart from '../hook/useEchart'
 export default {
     props:{
         data:[]
     },
     setup(props) {
         const {data} = toRefs(props)
-     
-        const chartsDom = ref(null)// 获取 chart DOM 
-
-        const initCharts = () => {
-            let myChart = echarts.getInstanceByDom(chartsDom.value)
-            if (!myChart) {
-                myChart = echarts.init(chartsDom.value)
-            } 
-            myChart.setOption(option, true)
-        }
-
-        watch(data.value,newValue=>{
-            if(newValue.length>0){
-                initCharts()
-            }
-        })
-
-        const colorList = [
-            'rgba(63, 191, 111, 1)',
-            'rgba(172, 91, 255, 1)',
-            'rgba(239, 207, 45,1)',
-            'rgba(60, 90, 224,1)',
-        ]
-
+        const { initChart,chartDom,watchEchart } = useEchart()
         const getOption = () => ({
             polar: {
                 radius: ['90%', '90%'],
@@ -82,10 +60,22 @@ export default {
                 },
             ],
         })
-    
- 
-
         const option = getOption()
+    
+        watch(data.value,newValue=>{
+            if(newValue.length>0){
+                initChart(option)
+            }
+        })
+
+        const colorList = [
+            'rgba(63, 191, 111, 1)',
+            'rgba(172, 91, 255, 1)',
+            'rgba(239, 207, 45,1)',
+            'rgba(60, 90, 224,1)',
+        ]
+
+
         const startChart = async () => {
             const total = data.value.reduce((pre, next) => pre + next.value, 0)
             option.series[0].data = []
@@ -119,24 +109,15 @@ export default {
                 }
                 return null
             })
-
-            initCharts()
+            initChart(option)
         }
 
         onMounted(() => {
             startChart()
-            // if (typeof window.polling.jin30GuZhangZhanBi === 'number') {
-            //     state.timer = setInterval(async () => {
-            //         startChart()
-            //     }, window.polling.jin30GuZhangZhanBi * 1000)
-            // }
         })
 
-        onBeforeUnmount(() => {
-            // clearInterval(state.timer)
-        })
         return {
-            chartsDom,
+            chartDom,
             ...toRefs(data),
         }
     },

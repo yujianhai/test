@@ -7,28 +7,19 @@
 <script>
 import * as echarts from 'echarts'
 import { onMounted, ref, toRefs } from 'vue'
+import useEcharts from '../hook/useEchart'
 export default {
     props:{
         data:{}
     },
     setup(props){
-        const chartDom = ref(null)
-        let chart = null
         let {data}  = toRefs(props)
-
-        const initChart = ()=>{
-             chart = echarts.init(chartDom.value)
-             const chartData = data.value
-             const option = getOption(chartData)
-             chart.setOption(option,true)
-        }
-
-
-        const getOption = (data)=>{
-            const {max,value} = data;
+        const {chartDom,initChart} = useEcharts()
+        const getOption = () =>{
+            const {max,value} = data.value;
             const littleCircle =value/max;
-            const du = 180; //圆环整体的环形体
-            const startAngle = 180  //旋转的角度
+            const du = 270; //圆环整体的环形体
+            const startAngle = 90  //旋转的角度
             return {
                 angleAxis: {
                     show: false,
@@ -98,7 +89,7 @@ export default {
                     {
                     type: 'pie',
                     radius: ['72%', '72%'], //圆圈的位置
-                                        center: ['50%', '50%'],
+                    center: ['50%', '50%'],
                     zlevel: 10,
                     silent: true,
                     startAngle, //极坐标初始角度
@@ -148,11 +139,12 @@ export default {
 
         }
         onMounted(()=>{
-        initChart()
+            const option = getOption()
+            initChart(option)
         })
 
         return {
-            chartDom
+            chartDom,
         }
     }
 
@@ -160,14 +152,13 @@ export default {
 </script>
 
 <style lang = 'scss' scoped>
-    .content{
+.content{
     display: flex;
-        .chart{
-            width: 300px;
-            height: 300px;
-            border: 1px solid red;
-        }
-
+    .chart{
+        width: 300px;
+        height: 300px;
+        border: 1px solid red;
     }
+}
 
 </style>
