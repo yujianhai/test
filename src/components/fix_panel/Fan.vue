@@ -19,7 +19,7 @@ export default {
       timer:null
     });
     const getMockData = ()=>{
-        return  axios.get('getapi/fanpaiqi')
+        return  axios.get('/getapi/fanpaiqi')
     }
 
     const getData = async ()=>{

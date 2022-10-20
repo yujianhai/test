@@ -24,7 +24,7 @@ import { reactive, toRefs, defineEmits } from 'vue'
         },
         {
             icon: 'b',
-            name: '图片动效',
+            name: '地球',
             number: 'Two',
         },
         {
@@ -39,7 +39,7 @@ import { reactive, toRefs, defineEmits } from 'vue'
         },
         {
             icon: 'e',
-            name: 'Five',
+            name: '地图',
             number: 'Five',
         },
         {

@@ -119,8 +119,7 @@ export default {
 }
 .lunbo-content{
     position: relative;
-    border: 1px solid red;
-    height: 350px;
+    height: 300px;
     width: 300px;
     overflow: hidden;
 }

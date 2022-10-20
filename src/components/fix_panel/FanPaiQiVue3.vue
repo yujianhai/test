@@ -51,7 +51,6 @@ export default {
                 // translate对数字字符进行滚动
                 for (let index = 0; index < numberItemsNum.length; index += 1) {
                     const elem = numberItemsNum[index];
-                    console.log(numberArr[index]);
                     elem.style.transform = `translate(-50%, -${numberArr[index] * 10}%)`;
                 }
             }
@@ -64,7 +63,6 @@ export default {
         } 
 
         watch(props,(newVal)=>{
-            console.log('watch');
             setTimeout(()=>{
                 if (props.config.num) {
                     state.time = 0;

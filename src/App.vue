@@ -15,6 +15,5 @@ html,body{
 .main{
     display: flex;
     flex-wrap: wrap;
-
 }
 </style>

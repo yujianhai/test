@@ -13,6 +13,20 @@ export default {
     setup(){
         const img1 = ref(ani1)
         const openAnimation = ref(null)
+
+        const SetTimeOutP = (time)=>{
+                return new Promise((res)=>{
+                    setTimeout(()=>{
+                        res()
+                    },time)
+                })        
+        }
+
+        async function  aa(){
+            const res =await SetTimeOutP(3000)
+        }
+
+        aa()
         return {
             ani1,
             openAnimation

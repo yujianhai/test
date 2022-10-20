@@ -1,14 +1,17 @@
 <template>
   <div class="main">
-    <scroll-into-view />
+    <!-- <scroll-into-view /> -->
+    <world-map />
   </div>
 </template>
 
 <script>
-import ScrollIntoView from '../../fix_panel/ScrollIntoView.vue'
+// import ScrollIntoView from '../../fix_panel/ScrollIntoView.vue'
+import WorldMap from  '../../echarts/TheWorldMap.vue'
 export default {
     components:{
-        ScrollIntoView
+        // ScrollIntoView,
+        WorldMap
     }
 
 }

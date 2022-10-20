@@ -110,7 +110,7 @@ export default {
 <style lang="scss" scoped>
 @keyframes lunbo {
     0%{
-        transform: translateX(0px);
+        transform: translateX(0rem);
     }
 
     100%{
@@ -119,9 +119,8 @@ export default {
 }
 .lunbo-content{
     position: relative;
-    border: 1px solid red;
-    height: 150px;
-    width: 400px;
+    height: 5.3571rem;
+    width: 14.2857rem;
     overflow: hidden;
 
 }
