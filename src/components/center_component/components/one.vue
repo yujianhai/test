@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="handleClick($event)">
     <div class="item" v-for="item in data" :key="item.id">
       <div class="left">
         <span>
@@ -12,7 +12,8 @@
         <span>{{ item.address }}</span>
       </div>
       <div class="right">
-        <button @click="handleUpdate(item)">修改</button>
+        <button :data-item-value="JSON.stringify(item)">修改</button>
+        <!-- <button @click="handleUpdate(item)">修改</button> -->
         <button @click="handleDelete(item.id)">删除</button>
         <button @click="showInsertPanel = !showInsertPanel">添加</button>
       </div>
@@ -62,6 +63,17 @@ const handleDelete = (id: number): void => {
   const index = state.data.findIndex((item) => item.id === id)
   state.data.splice(index, 1)
 }
+
+const handleClick = (ev)=>{
+  const data = ev.target.dataset.itemValue
+  
+  if(data){
+    state.information =JSON.parse(data)
+    state.showPanel = !state.showPanel
+  }
+    
+}
+
 const { data, information, showPanel,showInsertPanel } = toRefs(state)
 
 onMounted(() => {

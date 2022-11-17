@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="echartRef" ref="echartRef"></div>
+    <img :src="img" alt="">
   </div>
 </template>
 
@@ -35,28 +36,29 @@ export default {
        
 
         let GeoJSON = null
-        const getLocationArr = ()=>{
-            const objArr = GeoJSON.features
-            effectScatter.push({name:'南京吉山', value: startPoint})
-            countrys.forEach(country=>{
-            const point =objArr.filter(item=>{
-                if(item.properties.name === country)
-                return item
-            })
-            Arr.push( {
-                coords: [
-                        startPoint,  // 起点
-                        point[0].geometry.coordinates[0][0][0]  // 终点
-                    ],
-            })
-            effectScatter.push({name:point[0].properties.name ,value: point[0].geometry.coordinates[0][0][0]})
-             })
-        }
+        // const getLocationArr = ()=>{
+        //     const objArr = GeoJSON.features
+        //     effectScatter.push({name:'南京吉山', value: startPoint})
+        //     countrys.forEach(country=>{
+        //     const point =objArr.filter(item=>{
+        //         if(item.properties.name === country)
+        //         return item
+        //     })
+        //     Arr.push( {
+        //         coords: [
+        //                 startPoint,  // 起点
+        //                 point[0].geometry.coordinates[0][0][0]  // 终点
+        //             ],
+        //     })
+        //     effectScatter.push({name:point[0].properties.name ,value: point[0].geometry.coordinates[0][0][0]})
+        //      })
+        // }
         const getWorldJson =async ()=>{
             const wroldJSON = await axios.get('/getapi/worldmap')
             GeoJSON = wroldJSON.data
+            console.log(GeoJSON);
             echarts.registerMap('world',{geoJSON:GeoJSON})
-            getLocationArr()
+            // getLocationArr()
             initChart()
         }
 
@@ -66,60 +68,67 @@ export default {
         const getOption = ()=>{
            let option = {
             color:"#75fcff",
-            geo: {
-                left:0,
-                top:0,
-                map: 'world',
-                itemStyle: {
-                    areaColor:'#184477',
-                    opacity:0.8,
-                    borderColor:'#184477',
-                    borderWidth:0
-                },
-                zoom:1,
-                label:{
-                    show:false
-                },
-                regions:[
-                    {
-                        name:'中国',
-                        itemStyle:{
-                            areaColor:'#22b4ff'
-                        }
-                    }
-                ],
-            },
+            // geo: {
+            //     left:0,
+            //     top:0,
+            //     map: 'world',
+            //     itemStyle: {
+            //         areaColor:'#184477',
+            //         opacity:0.8,
+            //         borderColor:'#184477',
+            //         borderWidth:0
+            //     },
+            //     zoom:1,
+            //     label:{
+            //         show:false
+            //     },
+            //     regions:[
+            //         {
+            //             name:'中国',
+            //             itemStyle:{
+            //                 areaColor:'#22b4ff'
+            //             }
+            //         }
+            //     ],
+            // },
             series:[
+                {
+                    type:'map',
+                    map: 'world',
+                    // center: [115.97, '0%']
+                },
+                    // {
+                    //     name:' 飞行线路',
+                    //     type: 'lines',
+                    //     zlevel: 2,
+                    //     effect: {
+                    //         show: true,
+                    //         period: 6,
+                    //         trailLength: 0,
+                    //         symbolSize: 5,
+                    //         color:'#74fbfe',
+                    //         curveness: 0 //线段的弯曲程度
+                    //     },
+                    //     //飞行线底线的样式
+                    //     lineStyle: {
+                    //             color: '#74fbfe',
+                    //             width: 1,
+                    //             opacity: 1,
+                    //     },
+                    //     data: Arr
+                    // },
                     {
-                        name:' 飞行线路',
-                        type: 'lines',
-                        zlevel: 2,
-                        effect: {
-                            show: true,
-                            period: 6,
-                            trailLength: 0,
-                            symbolSize: 5,
-                            color:'#74fbfe',
-                            curveness: 0 //线段的弯曲程度
-                        },
-                        //飞行线底线的样式
-                        lineStyle: {
-                                color: '#74fbfe',
-                                width: 1,
-                                opacity: 1,
-                        },
-                        data: Arr
-                    },{
                         name:'散点',
                         coordinateSystem: 'geo',
                         type: 'scatter',
                         label:{
-                            show:false
+                            show:true
                         },
                         data:[
                             {
                                 value:[startPoint[0],startPoint[1]+10],
                                 name:'中华人民共和国',
+                                symbolSize:50,
                                 itemStyle:{
                                     color:'red'
                                 },
@@ -129,32 +138,36 @@ export default {
                             },
                         ]
                     }
-                    ,{
-                        name:'动画散点',
-                        coordinateSystem: 'geo',
-                        type: 'effectScatter',
-                        label:{
-                            show:true,
-                            formatter:'{b}',
-                            color:'white'
-                        },
-                        symbolSize:5,
-                        rippleEffect :{
-                            scale:5
-                        },
-                        data:effectScatter
-                    }
+                    // ,{
+                    //     name:'动画散点',
+                    //     coordinateSystem: 'geo',
+                    //     type: 'effectScatter',
+                    //     label:{
+                    //         show:true,
+                    //         formatter:'{b}',
+                    //         color:'white'
+                    //     },
+                    //     symbolSize:5,
+                    //     rippleEffect :{
+                    //         scale:5
+                    //     },
+                    //     data:effectScatter
+                    // }
             ]
         }
             return option
         }
+        const img = ref(null)
         const initChart=()=>{
             let chart =echarts.init(echartRef.value)
             const option = getOption()
             chart.setOption(option,true)
+            // const a = echartRef.value.children[0].children[0].toDataURL('a.png',1)//利用canvas将canvas渲染成图片
+            // img.value= a
         }
         return {
-            echartRef
+            echartRef,
+            // img
         }
     }
 }
@@ -164,7 +177,6 @@ export default {
 .echartRef{
     width: 870px;
     height: 500px;
-    border: 1px solid red;
 }
 
 </style>

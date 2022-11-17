@@ -44,8 +44,8 @@ import { reactive, toRefs, defineEmits } from 'vue'
         },
         {
             icon: 'f',
-            name: 'XXX',
-            number: 'Two',
+            name: 'Grid布局',
+            number: 'Six',
         },
         {
             icon: 'g',

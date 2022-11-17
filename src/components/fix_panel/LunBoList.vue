@@ -2,16 +2,18 @@
 <template>
 <div class="lunbo-content">
     <div 
-    @mousemove="mouseEnterOrLeave=true" 
-    @mouseleave="mouseEnterOrLeave=false"
-    :class="['lun-bo-list1',dataList.length>6&&!mouseEnterOrLeave?'list-animation':'']">  
+    :class="['lun-bo-list1']" ref="dom" :style="{'transition':top!==0?'top 1.1s':'','left':'0px'} ">  
             <div class="item" v-for="item in dataList" :key="item.id">
-                <span> {{item.id}} </span> &nbsp;&nbsp;
+                <span> {{item.id}}</span> &nbsp;&nbsp;
                 <span> {{item.age}} </span>&nbsp;&nbsp;
                 <span> {{item.name}} </span>
             </div>
+    </div>
+
+     <div 
+    :class="['lun-bo-list2']" ref="dom" :style="{'transition':top2!==dataList.length*itemHeight?'top 1.1s':'','left':'0px'} ">  
             <div class="item" v-for="item in dataList" :key="item.id">
-                <span> {{item.id}} </span> &nbsp;&nbsp;
+                <span> {{item.id}}</span> &nbsp;&nbsp;
                 <span> {{item.age}} </span>&nbsp;&nbsp;
                 <span> {{item.name}} </span>
             </div>
@@ -20,14 +22,14 @@
 </template>
 <script>
 import { reactive, ref, toRefs } from '@vue/reactivity'
-import { computed } from '@vue/runtime-core'
+import { computed, onMounted, onUnmounted } from '@vue/runtime-core'
 export default {
     setup(){
         const state = reactive({
             dataList:[
                 {
                     id:"001",
-                    name:"张三",
+                    name:"张三11",
                     age:18
                 },
                 {
@@ -55,54 +57,69 @@ export default {
                     name:"张三",
                     age:18
                 },
-                {
-                    id:"007",
-                    name:"张三",
-                    age:18
-                },
-                {
-                    id:"008",
-                    name:"张三",
-                    age:18
-                },
-                {
-                    id:"009",
-                    name:"张三",
-                    age:18
-                },
-                {
-                    id:"010",
-                    name:"张三",
-                    age:18
-                },
-                {
-                    id:"011",
-                    name:"张三",
-                    age:18
-                },
-                {
-                    id:"012",
-                    name:"张三",
-                    age:18
-                },
-                
-            ]
+                // {
+                //     id:"007",
+                //     name:"张三",
+                //     age:18
+                // },
+                // {
+                //     id:"008",
+                //     name:"张三",
+                //     age:18
+                // },
+                // {
+                //     id:"009",
+                //     name:"张三",
+                //     age:18
+                // },
+                // {
+                //     id:"010",
+                //     name:"张三",
+                //     age:18
+                // }
+            ],
+            top:0,
+            top2:0
         })
+        const speed = 720;
 
-        const mouseEnterOrLeave = ref(false)
+        const itemHeight = 50;
 
-        const itemHeight = 50  //每条item的高度
+        const dom = ref(null )
 
-        const moveTopPX = computed(()=>{  //计算向上滚动的高度
-            return `-${state.dataList.length*itemHeight}px`
-        })
+        state.top2 = state.dataList.length*itemHeight;
+
+        const to2 = computed(()=> state.top2 +"px")
+
+        const to = computed(()=> state.top +"px")
         
+        let timer = null
+
+
+        onMounted(()=>{
+            timer =  setInterval(()=>{
+                state.top -=itemHeight;
+                state.top2 -=itemHeight
+            },speed)
+
+            setInterval(()=>{
+                state.top = 0
+                state.top2 = state.dataList.length*itemHeight
+            },((state.dataList.length+1)*speed))
+        })
+
+        onUnmounted(()=>{
+            clearInterval(timer)
+        })
+
         return {
             ...toRefs(state),
-            moveTopPX,
-            itemHeight:`${itemHeight}px`,
-            mouseEnterOrLeave,
-        }
+            dom,
+            to ,
+            to2,
+            itemHeight,
+            itemPX:`${itemHeight}px`
+            }
     }
 }
 </script>
@@ -114,7 +131,7 @@ export default {
     }
 
     100%{
-        transform: translateY(v-bind('moveTopPX'));
+        transform: translateY(-50px);
     }
 }
 .lunbo-content{
@@ -123,15 +140,32 @@ export default {
     width: 300px;
     overflow: hidden;
 }
+
 .lun-bo-list1{
+
     position: absolute;
     width: 100%;
     height: 100%;
-    &.list-animation{
-        animation: lunbo 5s infinite forwards;
-    }
+    top: v-bind(to);
     .item{
-        height:v-bind(itemHeight);
+        height:v-bind(itemPX);
+        color: white;
+        &:nth-child(2n){
+            background: rgba( 16, 60, 105,  1.0);
+        }
+        &:nth-child(2n+1){
+            background: rgba( 16, 20, 105,  1.0);
+        }
+
+    }
+}
+.lun-bo-list2{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: v-bind(to2);
+    .item{
+        height:v-bind(itemPX);
         color: white;
 
         &:nth-child(2n){
@@ -140,6 +174,7 @@ export default {
         &:nth-child(2n+1){
             background: rgba( 16, 20, 105,  1.0);
         }
+
     }
 }
 

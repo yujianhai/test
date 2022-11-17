@@ -7,6 +7,7 @@
         <ZhuTu />
         <Pie4 :data="pie4.data" />
         <ShouXieBingTu />
+        <SurfaceBall />
   </div>
 </template>
 
@@ -18,6 +19,7 @@ import Pie4 from '../../echarts/Pie4.vue'
 import Histogram from '../../echarts/Histogram.vue'
 import ShouXieBingTu from '../../echarts/ShouXieBingTu.vue'
 import ZhuTu from '../../echarts/ZhuTu.vue'
+import SurfaceBall from '../../echarts/SurfaceBall.vue'
 import { reactive, toRefs } from '@vue/reactivity'
 export default {
     components:{
@@ -28,6 +30,7 @@ export default {
         Histogram,
         ZhuTu,
         ShouXieBingTu,
+        SurfaceBall
     },
     setup(){
         const state = reactive({

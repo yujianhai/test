@@ -88,7 +88,7 @@ export default {
         getNumber(str) {
             const val = str;
             const arr = val.split('');
-            arr[arr.length - 1] = '0';
+            arr[arr.length - 1] = '0'; 
             arr[arr.length - 2] = '0';
             return arr.join('');
         },

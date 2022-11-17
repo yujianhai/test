@@ -25,7 +25,6 @@ export default {
     const getData = async ()=>{
         const res= await getMockData() 
         state.num = res.data.number
-        console.log(res.data.number);
     }
 
     getData()
