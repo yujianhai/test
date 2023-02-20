@@ -4,7 +4,6 @@
     <div class="container">
       <LeftMenu class="left" @change="resolveChangeValue" />
       <div>
-        Mytest
       </div>
       <Center class="right" :componentName="componentName" />
     </div>
