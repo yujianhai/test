@@ -2,13 +2,11 @@
   <div class="home">
     <Head />
     <div class="container">
-        <a href="">
-        余建海test2
-        </a>
       <LeftMenu class="left" @change="resolveChangeValue" />
+      <div>
+        Mytest
+      </div>
       <Center class="right" :componentName="componentName" />
-      <a href="">
-      </a>
     </div>
   </div>
 </template>
