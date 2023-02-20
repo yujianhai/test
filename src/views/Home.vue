@@ -2,8 +2,13 @@
   <div class="home">
     <Head />
     <div class="container">
+        <a href="">
+        余建海test2
+        </a>
       <LeftMenu class="left" @change="resolveChangeValue" />
       <Center class="right" :componentName="componentName" />
+      <a href="">
+      </a>
     </div>
   </div>
 </template>
@@ -15,7 +20,7 @@ import Center from '../components/center_component'
 import { ref } from 'vue'
 const componentName = ref('')
 const resolveChangeValue = (value) => {
-  componentName.value = value
+  componentName.value = value   
 }
 </script>
 <style lang="scss" scoped>
